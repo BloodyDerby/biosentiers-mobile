@@ -15,6 +15,8 @@
     poiCtrl.setPoiSeen = setPoiSeen;
     poiCtrl.checkBoxState = checkBoxState;
     poiCtrl.getImageSource = getImageSource;
+    poiCtrl.beep = beep;
+    poiCtrl.resizeTxtArea = resizeTxtArea;
 
     Excursion.currentPoiChangeObs.subscribe(function(data) {
       $log.log(TAG + 'currentPoiChangeObs', data);
@@ -47,5 +49,23 @@
       AppActions.execute('trackActivity', {eventObject: EventLogFactory.action.ar.poi.closed(Excursion.serverId, poiCtrl.poi.id, poiCtrl.content.id)});
       Modals.removeCurrent();
     }
+
+    function beep() {
+      console.log("work");
+      
+    }
+    function resizeTxtArea() {
+      console.log("Size has changed");
+      var tx = document.getElementsByTagName('textarea');
+        for (var i = 0; i < tx.length; i++) {
+          tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
+          tx[i].addEventListener("input", OnInput, false);
+        }
+
+      function OnInput(e) {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      }
+    }    
   }
 })();
