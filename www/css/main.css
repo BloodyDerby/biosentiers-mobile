@@ -50,6 +50,10 @@
 .poi-card .firstLetterUp::first-letter {
   text-transform: uppercase; }
 
+.poi-card .txtAreaObservation {
+  background-color: #f7f7f7;
+  width: 100%; }
+
 #login {
   display: flex;
   flex-direction: column;

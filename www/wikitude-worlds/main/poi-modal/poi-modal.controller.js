@@ -15,7 +15,6 @@
     poiCtrl.setPoiSeen = setPoiSeen;
     poiCtrl.checkBoxState = checkBoxState;
     poiCtrl.getImageSource = getImageSource;
-    poiCtrl.beep = beep;
     poiCtrl.resizeTxtArea = resizeTxtArea;
 
     Excursion.currentPoiChangeObs.subscribe(function(data) {
@@ -29,6 +28,20 @@
     });
 
     ////////////////////
+    //Auto Height resize function for textArea of "observation" on AR spcie
+    function resizeTxtArea() {
+      console.log("Size has changed");
+      var tx = document.getElementsByTagName('textarea');
+        for (var i = 0; i < tx.length; i++) {
+          tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
+          tx[i].addEventListener("input", OnInput, false);
+        }
+
+      function OnInput(e) {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      }
+    }
 
     function getImageSource(id) {
       return "./assets/img/" + id + "a.jpg";
@@ -50,22 +63,6 @@
       Modals.removeCurrent();
     }
 
-    function beep() {
-      console.log("work");
-      
-    }
-    function resizeTxtArea() {
-      console.log("Size has changed");
-      var tx = document.getElementsByTagName('textarea');
-        for (var i = 0; i < tx.length; i++) {
-          tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
-          tx[i].addEventListener("input", OnInput, false);
-        }
-
-      function OnInput(e) {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
-      }
-    }    
+        
   }
 })();

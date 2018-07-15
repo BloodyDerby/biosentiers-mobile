@@ -24,7 +24,7 @@
       });
 
     ////////////////////
-
+    
     function goToSpeciesCard(seenSpecies) {
       ActivityTracker(EventLogFactory.navigation.excursion.seenPois.card(seenSpecies.speciesId, excursionSeen.excursion));
       $state.go('app.excursion.seenlist.poi', {theme: seenSpecies.theme, speciesId: seenSpecies.speciesId})

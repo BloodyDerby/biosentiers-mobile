@@ -236,6 +236,10 @@ option.placeholder {
 .poi-card .firstLetterUp::first-letter {
   text-transform: uppercase; }
 
+.poi-card .txtAreaObservation {
+  background-color: #f7f7f7;
+  width: 100%; }
+
 .debug-log {
   position: absolute;
   top: 90px;
