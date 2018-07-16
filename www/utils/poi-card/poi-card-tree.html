@@ -33,7 +33,9 @@
 			</div>
 			<div class="item item-body">
 				<h2>Ton observation</h2>			
-				<textarea class="txtAreaObservation" ng-keyup="poiCtrl.resizeTxtArea()" placeholder="Qu'as-tu observé ?" maxlength="500"></textarea>	
+				<textarea class="txtAreaObservation" ng-model="poiCtrl.observation" ng-blur="poiCtrl.saveObservation(poiCtrl.observation)" 
+													 ng-keyup="poiCtrl.resizeTxtArea()" placeholder="Qu'as-tu observé ?" maxlength="500">
+				</textarea>	
 			</div>
 		</div>
 		<div class="list card" ng-if="::poiCtrl.content.website">

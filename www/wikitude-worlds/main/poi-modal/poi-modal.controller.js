@@ -16,6 +16,7 @@
     poiCtrl.checkBoxState = checkBoxState;
     poiCtrl.getImageSource = getImageSource;
     poiCtrl.resizeTxtArea = resizeTxtArea;
+    poiCtrl.saveObservation = saveObservation;
 
     Excursion.currentPoiChangeObs.subscribe(function(data) {
       $log.log(TAG + 'currentPoiChangeObs', data);
@@ -42,6 +43,12 @@
         this.style.height = (this.scrollHeight) + 'px';
       }
     }
+    //Catch the observation from HTML spiece viewAR
+    function saveObservation(obser)
+    {
+      console.log("Focus OUT !! you write :"+obser+". This obeservation gonna be pass to ionic now");
+      AppActions.execute('saveObservation', {observation : obser}); 
+    }
 
     function getImageSource(id) {
       return "./assets/img/" + id + "a.jpg";
@@ -59,7 +66,7 @@
     }
 
     function remove() {
-      AppActions.execute('trackActivity', {eventObject: EventLogFactory.action.ar.poi.closed(Excursion.serverId, poiCtrl.poi.id, poiCtrl.content.id)});
+      AppActions.execute('trackActivity', {eventObject: EventLogFactory.action.ar.poi.closed(Excursion.serverId, poiCtrl.poi.id, poiCtrl.content.id)});      
       Modals.removeCurrent();
     }
 

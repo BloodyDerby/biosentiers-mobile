@@ -44,6 +44,7 @@
       addIonicitudeAction(addSeenPoi);
       addIonicitudeAction(finishExcursion);
       addIonicitudeAction(trackActivity);
+      addIonicitudeAction(saveObservation);
 
       // Ionicitude.listLibActions();
 
@@ -128,6 +129,10 @@
        */
       function trackActivity(service, param) {
         return ActivityTracker(param.eventObject);
+      }
+
+      function saveObservation(service, param) {
+        console.log("Ionictitude action trigger, the observation is :",param);
       }
 
       ////////////////////
