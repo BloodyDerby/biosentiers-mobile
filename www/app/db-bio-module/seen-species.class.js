@@ -26,7 +26,7 @@
     }
 
     /**
-     * Creates a new SeenSpecies object frome a SeenPoi object.
+     * Creates a new SeenSpecies object from a SeenPoi object.
      * @param {String} seenPoi.qrId - The qrId of the excursion
      * @param {String} seenPoi.serverId - The serverId of the excursion
      * @param {String} seenPoi.participantId - The participantId for this excursion

@@ -15,6 +15,7 @@
                       DbExcursions,
                       DbSeenPois,
                       DbSeenSpecies,
+                      DbObservation,
                       EventLogFactory,
                       Ionicitude,
                       $ionicPlatform,
@@ -22,6 +23,7 @@
                       PoiContent,
                       $q,
                       SeenPoi,
+                      Observation,
                       WorldActions) {
 
     var TAG = "[App:Run:IonicitudeAction] ",
@@ -133,6 +135,7 @@
 
       function saveObservation(service, param) {
         console.log("Ionictitude action trigger, the observation is :",param);
+        DbObservation.addOne(new Observation(param.text, param.qrId, param.participantId, param.serverId, param.poiId));        
       }
 
       ////////////////////

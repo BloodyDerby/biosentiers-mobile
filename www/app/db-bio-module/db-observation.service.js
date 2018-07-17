@@ -2,19 +2,15 @@
   'use strict';
   angular
     .module('db-bio-module')
-    .factory('DbSeenSpecies', DbSeenSpeciesFn);
+    .factory('DbObservation', DbObservationFn);
 
-  function DbSeenSpeciesFn(DbBio, $log, rx) {
-    var TAG                = "[DbSeenSpecies] ",
-        COLL_NAME          = "seen-species",
-        seenSpeciesSubject = new rx.ReplaySubject(1),
-        service            = {
-          fetchOne      : fetchOne,
-          fetchAll      : fetchAll,
-          addOne        : addOne,
-          updateOne     : updateOne,
-          countFor      : countFor,
-          seenSpeciesObs: seenSpeciesSubject.asObservable()
+  function DbObservationFn(DbBio, $log, rx) {
+    var TAG                = "[DbObservation] ",
+        COLL_NAME          = "observation",
+        service   = {
+          fetchOne    : fetchOne,
+          addOne      : addOne,
+          updateOne   : updateOne
         };
 
     return service;
@@ -22,73 +18,62 @@
     /* ----- Public Functions ----- */
 
     /**
-     * Fetches one SeenSpecies from the database that matches the given qrId and speciesId.
-     * @param {String} qrId - The qrId of the excursion in which the species has been seen
-     * @param {String} speciesId - The id of the species to fetch
+     * Fetches one Observation from the database that matches the given qrId and speciesId.
+     * @param {String} poiId - The poiId of the observation 
+     * @param {String} qrId - The participantId of the observation to fetch
      */
-    function fetchOne(qrId, speciesId) {
+    function fetchOne(poiId, qrId) {
       return getCollection()
-        .then(function(coll) { return coll.findOne({qrId: qrId, speciesId: speciesId}); })
+        .then(function(coll) { return coll.findOne({poiId: poiId, qrId: qrId}); })
         .catch(handleError);
     }
 
-    /**
-     * Fetches all SeenSpecies from the database that matches the given criteria object.
-     * @param {Object} criteria - A MongoDB-like object describing the criteria to match.
-     * @return {Promise} - A Promise of one or several SeenSpecies object
+     /**
+     * Adds a new Observation in the database.
+     * @param {Observation} observation - An object representing the new Observation to add.
      */
-    function fetchAll(criteria) {
+  /*   function addOne(observation) {
       return getCollection()
-        .then(function(coll) { return coll.find(criteria); })
-        .catch(handleError);
-    }
-
-    /**
-     * Adds a new SeenSpecies in the database.
-     * @param {SeenSpecies} seenSpecies - An object representing the new SeenSpecies to add.
-     */
-    function addOne(seenSpecies) {
-      return getCollection()
-        .then(function(coll) { return coll.insert(seenSpecies); })
-        .then(function(savedSpecies) { return countFor(savedSpecies.qrId); })
-        .then(function(nbSeen) { seenSpeciesSubject.onNext({qrId: seenSpecies.qrId, nbSeen: nbSeen}); })
+        .then(function(coll) {return coll.insert(observation); })
         .catch(handleError)
         .finally(DbBio.save)
+    } */
+
+    function addOne(observation) {
+      var coll;    
+          return getCollection()    
+            .then(function(collection) {     
+          coll = collection;    
+          return coll.insert(observation);})    
+            .catch(handleError)    
+            .finally(function() {    
+          console.log(coll);    
+          DbBio.save();    
+        })    
     }
+    
 
     /**
-     * Updates the SeenSpecies that matches the given seenSpecies object.
+     * Updates the Observation that matches the given observation object.
      * Uses internal Loki properties to do the matching.
-     * @param {SeenSpecies} seenSpecies - The SeenSpecies to update.
-     * @return {Promise} - A promise of an updated SeenSpecies.
+     * @param {Observation} observation - The Observation to update.
+     * @return {Promise} - A promise of an updated Observation.
      */
-    function updateOne(seenSpecies) {
+    function updateOne(observation) {
       return getCollection()
-        .then(function(coll) { return coll.update(seenSpecies); })
+        .then(function(coll) { return coll.update(observation); })
         .catch(handleError)
         .finally(DbBio.save)
-    }
-
-    /**
-     * Counts how many species have been seen in the excursion whose qrId matches the one given as argument.
-     * @param {String} qrId - The qrId of the excursion for which we want to count the number of SeenSpecies
-     * @return {Promise} - A promise of the number of SeenSpecies for the excursion.
-     */
-    function countFor(qrId) {
-      return getCollection()
-        .then(function(coll) { return coll.count({qrId: qrId}); })
-        .catch(handleError)
     }
 
     /* ----- Private Functions ----- */
-
     function handleError(error) {
       $log.log(TAG + "error", error);
       throw error;
     }
 
     /**
-     * Gets the seen-species collection from the database.
+     * Gets the observation collection from the database.
      * @return {Promise} - The promise of a collection
      */
     function getCollection() {

@@ -43,11 +43,22 @@
         this.style.height = (this.scrollHeight) + 'px';
       }
     }
-    //Catch the observation from HTML spiece viewAR
+    //Catch the observation from HTML specie viewAR
     function saveObservation(obser)
     {
       console.log("Focus OUT !! you write :"+obser+". This obeservation gonna be pass to ionic now");
-      AppActions.execute('saveObservation', {observation : obser}); 
+      console.log("Excursion objet",Excursion);
+      console.log("id du participant",Excursion.qrId);
+      console.log("id du poi",poiCtrl.poi);
+      var param = {
+        text        : obser,
+        qrId        : Excursion.qrId,
+        participantId : Excursion.participantId,
+        serverId    : Excursion.serverId,
+        poiId       : poiCtrl.poi.properties.id
+        
+      };
+      AppActions.execute('saveObservation', param); 
     }
 
     function getImageSource(id) {
