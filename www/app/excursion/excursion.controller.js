@@ -8,7 +8,7 @@
     .module('app')
     .controller('ExcursionCtrl', ExcursionCtrl);
 
-  function ExcursionCtrl(ActivityTracker, $cordovaGeolocation, $cordovaToast, EventLogFactory, Ionicitude, $ionicPopover, leafletData, $log, ExcursionMapConfig, DbExcursions, excursionData, PoiGeo, $q, DbSeenPois, DbSeenSpecies, rx, $scope, $state, $timeout, WorldActions) {
+  function ExcursionCtrl(ActivityTracker, $cordovaGeolocation, $cordovaToast, EventLogFactory, Ionicitude, $ionicPopover, leafletData, $log, ExcursionMapConfig, DbExcursions, excursionData, PoiGeo, $q, DbSeenPois, DbSeenSpecies, DbObservation, rx, $scope, $state, $timeout, WorldActions) {
     var TAG = "[ExcursionCtrl] ";
 
     $scope.$on('$ionicView.beforeEnter', function(event, viewData) {
@@ -29,6 +29,9 @@
     var excursion = this;
     var geoData, positionWatcher;
     var RefreshData = rx.Observable.merge(DbExcursions.archivedObs, DbExcursions.restoredObs);
+
+    //TODELETE
+    console.log(DbObservation.fetchAll()/*.then(DbObservation.removeObservation())*/);
 
     $log.log(TAG + "excursion data", excursionData);
     excursion.data = excursionData;

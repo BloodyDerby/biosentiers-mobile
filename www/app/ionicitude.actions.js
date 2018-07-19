@@ -47,10 +47,26 @@
       addIonicitudeAction(finishExcursion);
       addIonicitudeAction(trackActivity);
       addIonicitudeAction(saveObservation);
+      addIonicitudeAction(loadObservation);
 
       // Ionicitude.listLibActions();
 
       ////////////////////
+      //TB-BioSentiers : Add observation in the db loki
+      function saveObservation(service, observation) {
+        //TODELETE
+        console.log("Ionictitude action trigger, the observation is :",observation);
+        DbObservation.addOne(new Observation(observation.text,
+                                             observation.observationId,
+                                             observation.qrId,
+                                             observation.participantId,
+                                             observation.serverId,
+                                             observation.poiId));
+        }
+
+      function loadObservation(service, observation){
+        DbObservation.fetchOne(observation);
+      }
 
       /**
        * Starts to watch the device's orientation and send the data to the AR View.
@@ -132,12 +148,6 @@
       function trackActivity(service, param) {
         return ActivityTracker(param.eventObject);
       }
-
-      function saveObservation(service, param) {
-        console.log("Ionictitude action trigger, the observation is :",param);
-        DbObservation.addOne(new Observation(param.text, param.qrId, param.participantId, param.serverId, param.poiId));        
-      }
-
       ////////////////////
 
       /**

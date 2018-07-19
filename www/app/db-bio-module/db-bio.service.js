@@ -15,7 +15,8 @@
         service  = {
           getCollection: getCollection,
           reset        : reset,
-          save         : save
+          save         : save,
+          removeObsColl : removeObsColl
         };
 
     return service;
@@ -62,6 +63,15 @@
           return coll;
         });
       })
+    }
+
+    //TODELETE + DELETE--> dans la déclaration public en haut  FOnction test pour purger la collection d'observation
+    function removeObsColl(){
+      return start()
+		.then(function(){
+				return db.removeCollection('observation');
+	  		})
+        .then(save)
     }
 
     /**

@@ -29,7 +29,7 @@
     });
 
     ////////////////////
-    //Auto Height resize function for textArea of "observation" on AR spcie
+    //TB-BIOSENTIERS Auto Height resize function for textArea of "observation" on AR spcie
     function resizeTxtArea() {
       console.log("Size has changed");
       var tx = document.getElementsByTagName('textarea');
@@ -43,22 +43,26 @@
         this.style.height = (this.scrollHeight) + 'px';
       }
     }
-    //Catch the observation from HTML specie viewAR
-    function saveObservation(obser)
+    //TB-BIOSENTIERS Catch the observation from HTML specie viewAR
+    function saveObservation(txt_obserervation)
     {
-      console.log("Focus OUT !! you write :"+obser+". This obeservation gonna be pass to ionic now");
-      console.log("Excursion objet",Excursion);
-      console.log("id du participant",Excursion.qrId);
-      console.log("id du poi",poiCtrl.poi);
-      var param = {
-        text        : obser,
-        qrId        : Excursion.qrId,
-        participantId : Excursion.participantId,
-        serverId    : Excursion.serverId,
-        poiId       : poiCtrl.poi.properties.id
-        
-      };
-      AppActions.execute('saveObservation', param); 
+      //TODELETE
+      console.log("Focus OUT !! you write :"+txt_obserervation+". This obeservation gonna be pass to ionic now");
+      console.log(txt_obserervation);
+      if(txt_obserervation !=null)
+      {
+        var param = {
+          text        : txt_obserervation,
+          observationId : Excursion.qrId+poiCtrl.poi.properties.id,
+          qrId        : Excursion.qrId,
+          participantId : Excursion.participantId,
+          serverId    : Excursion.serverId,
+          poiId       : poiCtrl.poi.properties.id
+        };
+        //TODELETE
+        console.log("il y a une observation !")
+        AppActions.execute('saveObservation', param);
+      }
     }
 
     function getImageSource(id) {
@@ -77,10 +81,10 @@
     }
 
     function remove() {
-      AppActions.execute('trackActivity', {eventObject: EventLogFactory.action.ar.poi.closed(Excursion.serverId, poiCtrl.poi.id, poiCtrl.content.id)});      
+      AppActions.execute('trackActivity', {eventObject: EventLogFactory.action.ar.poi.closed(Excursion.serverId, poiCtrl.poi.id, poiCtrl.content.id)});
       Modals.removeCurrent();
     }
 
-        
+
   }
 })();
