@@ -38,35 +38,60 @@
     /**
      * Fetches one Observation from the database that matches the given qrId and speciesId.
      * @param {String} observationId - Unique id which the combinaison of qrId + poiId
+     * @return {Promise} - A promise of an updated Observation.
      */
     function fetchOne(observationId) {
       return getCollection()
-        .then(function(coll) { return coll.findOne({observationId: observationId}); })
+        .then(function(coll) { return coll.findOne({observationId: observationId}); }) 
         .catch(handleError);
     }
 
+
      /**
+   * Add or Update an  Observation in the database.
+   * @param {Observation} observation - An object representing the new Observation to add.
+   */
+  /* function upsertOne(observation) {
+    return getCollection()
+      .then(function(coll) {
+         return coll.findOne({observation.observationId : observationId});})
+      .then(function(coll) {
+        if(coll === null){
+          return coll.insert(observation)
+          .catch(handleError)
+          .finally(DbBio.save)
+        }
+        else{
+          return coll.update(observation)
+          .catch(handleError)
+          .finally(DbBio.save)
+        }
+      ;})
+  } */
+
+      
+      /**
      * Adds a new Observation in the database.
      * @param {Observation} observation - An object representing the new Observation to add.
      */
-  /*   function addOne(observation) {
-      return getCollection()
-        .then(function(coll) {return coll.insert(observation); })
-        .catch(handleError)
-        .finally(DbBio.save)
-    } */
+      function addOne(observation) {
+        return getCollection()
+          .then(function(coll) {return coll.insert(observation);})
+          .catch(handleError)
+          .finally(DbBio.save)
+    } 
 
-    function addOne(observation) {
-      var coll;
-          return getCollection()
-            .then(function(collection) {
-          coll = collection;
-          return coll.insert(observation);})
-            .catch(handleError)
-            .finally(function() {
-          DbBio.save();
-        })
-    }
+            
+     /* var coll;
+      return getCollection()
+        .then(function(collection) {
+      coll = collection;
+      return coll.insert(observation);})
+      .catch(handleError)
+      .finally(function() {
+        DbBio.save();
+      })  */
+    
     //TODELETE Supprime la collection
     function removeObservation() {
          return DbBio.removeObsColl();

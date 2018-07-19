@@ -38,7 +38,7 @@
      * @param {Object} options - Execution options.
      * @param {Boolean} options.return - Whether the result of executing the action in the Ionic application should be returned to the wikitude world.
      *                                   If true, the returned promise will be resolved with the result (or the error if it failed).
-     *                                   Defaults to false.
+     *                                   Defaults to false. //TODELETE// En clair : tu passes { return: true } en troisième paramètre de execute, et tu peux faire un then sur execute
      * @param {Boolean|Number} options.timeout - A number of milliseconds after which the action will be considered to have timed out and
      *                                           the returned promise will be rejected. You may also pass `false` to disable the timeout entirely.
      *                                           Defaults to 30000 milliseconds.

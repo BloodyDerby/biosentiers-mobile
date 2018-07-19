@@ -31,7 +31,7 @@
     var RefreshData = rx.Observable.merge(DbExcursions.archivedObs, DbExcursions.restoredObs);
 
     //TODELETE
-    console.log(DbObservation.fetchAll()/*.then(DbObservation.removeObservation())*/);
+    console.log(DbObservation.fetchAll().then(DbObservation.removeObservation()));
 
     $log.log(TAG + "excursion data", excursionData);
     excursion.data = excursionData;

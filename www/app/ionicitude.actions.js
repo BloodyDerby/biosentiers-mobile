@@ -46,14 +46,14 @@
       addIonicitudeAction(addSeenPoi);
       addIonicitudeAction(finishExcursion);
       addIonicitudeAction(trackActivity);
-      addIonicitudeAction(saveObservation);
+      addIonicitudeAction(upsertObservation);
       addIonicitudeAction(loadObservation);
 
       // Ionicitude.listLibActions();
 
       ////////////////////
-      //TB-BioSentiers : Add observation in the db loki
-      function saveObservation(service, observation) {
+      //TB-BioSentiers : Add or update observation in the db loki
+      function upsertObservation(service, observation) {
         //TODELETE
         console.log("Ionictitude action trigger, the observation is :",observation);
         DbObservation.addOne(new Observation(observation.text,
@@ -62,10 +62,10 @@
                                              observation.participantId,
                                              observation.serverId,
                                              observation.poiId));
-        }
+      }
 
       function loadObservation(service, observation){
-        DbObservation.fetchOne(observation);
+        return DbObservation.fetchOne(observation.observationId);
       }
 
       /**

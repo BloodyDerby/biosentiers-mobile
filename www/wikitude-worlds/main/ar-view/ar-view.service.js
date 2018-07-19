@@ -247,7 +247,7 @@
           if (dist <= arPoi.minActiveDistance) {
             DebugLog.add('POI showing the details');
             AppActions.execute('trackActivity', {eventObject: EventLogFactory.action.ar.poi.opened(Excursion.serverId, arPoi.id)}, {return: true})
-              .then(function() { Excursion.loadCurrentPoi(arPoi.poi); });              
+              .then(function() { Excursion.loadCurrentPoi(arPoi.poi); });
             // if (!arPoi.hasBeenSeen) setPoiSeen();
           } else {
             DebugLog.add('POI is too far away');
