@@ -36,8 +36,6 @@
 
     function loadObservation()
     {
-      console.log("Début fonction loadObservation");
-
       var param = {
         observationId : Excursion.qrId+poiCtrl.poi.properties.id
       };

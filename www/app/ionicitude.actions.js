@@ -56,7 +56,7 @@
       function upsertObservation(service, observation) {
         //TODELETE
         console.log("Ionictitude action trigger, the observation is :",observation);
-        DbObservation.addOne(new Observation(observation.text,
+        DbObservation.upsertOne(new Observation(observation.text,
                                              observation.observationId,
                                              observation.qrId,
                                              observation.participantId,

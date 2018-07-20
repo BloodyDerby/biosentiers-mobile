@@ -13,6 +13,7 @@
         service   = {
           fetchAll    : fetchAll,
           fetchOne    : fetchOne,
+          upsertOne   : upsertOne,
           addOne      : addOne,
           updateOne   : updateOne,
           removeObservation : removeObservation,
@@ -47,29 +48,34 @@
     }
 
 
-     /**
+  /**
    * Add or Update an  Observation in the database.
    * @param {Observation} observation - An object representing the new Observation to add.
    */
-  /* function upsertOne(observation) {
+   function upsertOne(observation) {
+    var observationCollection;
     return getCollection()
       .then(function(coll) {
-         return coll.findOne({observation.observationId : observationId});})
-      .then(function(coll) {
-        if(coll === null){
-          return coll.insert(observation)
-          .catch(handleError)
-          .finally(DbBio.save)
+        observationCollection = coll;
+         return coll.findOne({observationId : observation.observationId});})
+      .then(function(observationFound) {
+        console.log("observationFound = ", observationFound)
+        if(observationFound === null){
+          console.log("Nouvelle observation à ajouter", observationCollection);
+          return observationCollection.insert(observation);          
         }
-        else{
-          return coll.update(observation)
-          .catch(handleError)
-          .finally(DbBio.save)
+        else{          
+          console.log("Observation à MAJ", observationCollection);
+          //should do modifiy the proprety in the object from res cause this one has meta $loki info. can't update with observation Object
+          observationFound.text = observation.text;
+          return observationCollection.update(observationFound);          
         }
-      ;})
-  } */
+      })
+      .catch(handleError)
+      .finally(DbBio.save);
+  } 
 
-      
+
       /**
      * Adds a new Observation in the database.
      * @param {Observation} observation - An object representing the new Observation to add.
@@ -78,7 +84,7 @@
         return getCollection()
           .then(function(coll) {return coll.insert(observation);})
           .catch(handleError)
-          .finally(DbBio.save)
+          .finally(DbBio.save);
     } 
 
             

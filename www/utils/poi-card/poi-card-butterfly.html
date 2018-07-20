@@ -38,6 +38,11 @@
 				<h2>Commentaire</h2>
 				<p class="firstLetterUp">{{::poiCtrl.content.comment}}</p>
 			</div>
+			<div class="item item-body">
+				<h2>Ton observation</h2>
+				<textarea class="txtAreaObservation" ng-model="poiCtrl.observation" ng-blur="poiCtrl.upsertObservation()"
+													 ng-keyup="poiCtrl.resizeTxtArea()" placeholder="Qu'as tu observé ?" maxlength="1000"></textarea>
+			</div>
 		</div>
 		<div class="list card" ng-if="::poiCtrl.content.website">
 			<a class="item item-icon-right positive" ng-click="poiCtrl.openInBrowser()">Plus sur le Web<i
