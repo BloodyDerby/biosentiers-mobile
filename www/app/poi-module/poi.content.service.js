@@ -19,8 +19,8 @@
 
     ////////////////////
 
-    function getPoiData(specieId, theme) {
-      var url = 'data/poi-details/' + theme + '/' + theme + specieId + '.json';
+    function getPoiData(speciesId, theme) {
+      var url = 'data/poi-details/' + theme + '/' + theme + speciesId + '.json';
       $log.log(TAG + 'getPoiData:url', url);
       return $http.get(url).then(function(result) {
         $log.log(TAG + 'getPoiData:result', result);

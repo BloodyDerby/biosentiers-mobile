@@ -24,10 +24,10 @@
       });
 
     ////////////////////
-    
+    //TB-BIOSENTIER
     function goToSpeciesCard(seenSpecies) {
       ActivityTracker(EventLogFactory.navigation.excursion.seenPois.card(seenSpecies.speciesId, excursionSeen.excursion));
-      $state.go('app.excursion.seenlist.poi', {theme: seenSpecies.theme, speciesId: seenSpecies.speciesId})
+      $state.go('app.excursion.seenlist.poi', {theme: seenSpecies.theme, speciesId: seenSpecies.speciesId, qrId: excursionSeen.excursion.qrId })
     }
   }
 })();

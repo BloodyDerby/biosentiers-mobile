@@ -18,6 +18,9 @@
     poiCtrl.resizeTxtArea = resizeTxtArea;
     poiCtrl.upsertObservation = upsertObservation;
     poiCtrl.observation;
+    poiCtrl.displayObservation = true;
+    poiCtrl.displayTxtArea = true;
+    poiCtrl.displayP = false;
 
     Excursion.currentPoiChangeObs.subscribe(function(data) {
       $log.log(TAG + 'currentPoiChangeObs', data);
@@ -28,6 +31,7 @@
       $log.log(TAG + 'poiCtrl.commonNameLanguages', poiCtrl.commonNameLanguages);
       poiCtrl.includeSrc = '../../utils/poi-card/poi-card-' + data.details.theme + '.html';
     });
+
 
     //TB-BIOSENTIERS Load the observation of the current opened poi
     console.log("Lancement de la fonction loadObservation() dans le controlleur poi");
@@ -63,6 +67,8 @@
     //TB-BIOSENTIERS Create/update an observation from textArea, then save it in db
     function upsertObservation()
     {
+      //TODELETE
+      console.log(poiCtrl);
       //Creating an observation object with current values
       var param = {
         text          : poiCtrl.observation,
@@ -70,13 +76,14 @@
         qrId          : Excursion.qrId,
         participantId : Excursion.participantId,
         serverId      : Excursion.serverId,
+        speciesId     : poiCtrl.poi.properties.speciesId,
         poiId         : poiCtrl.poi.properties.id
        };
 
       if(poiCtrl.observation !=null)
       {
         //TODELETE
-        console.log("Ajout ou update d'observation-->upsert")
+        console.log("Ajout ou update d'observation-->upsert");
         AppActions.execute('upsertObservation', param);
       }
     }

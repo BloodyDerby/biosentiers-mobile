@@ -23,7 +23,7 @@
 
     /* ----- Public Functions ----- */
         /**
-     * Retrieve all the saved Excursions
+     * Retrieve all the saved obserations
      * @param {Object} criterias An option object respecting the MongoDB syntax that will be used to filter the excursions.
      * @return {Promise} A promise of an array of Excursions
      */
@@ -127,8 +127,6 @@
      * @return {Promise} - The promise of a collection
      */
     function getCollection() {
-      //TODELETE
-      console.log("Ici c'est le get Collection du service observation");
       return DbBio.getCollection(COLL_NAME,COLL_OPTIONS);
     }
   }

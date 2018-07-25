@@ -61,6 +61,7 @@
                                              observation.qrId,
                                              observation.participantId,
                                              observation.serverId,
+                                             observation.speciesId,
                                              observation.poiId));
       }
 
