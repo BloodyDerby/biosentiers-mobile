@@ -7,7 +7,7 @@
     .module('app')
     .controller('ExcursionSeenPoiCtrl', ExcursionSeenPoiCtrlFn);
 
-  function ExcursionSeenPoiCtrlFn(PoiCardService, PoiContent, $log, $stateParams, DbObservation) {
+  function ExcursionSeenPoiCtrlFn(PoiCardService, PoiContent, $log, $stateParams, DbObservation, DbSeenPois, $q) {
     var TAG     = "[ExcursionSeenPoiCtrl] ",
         poiCtrl = this;       
         poiCtrl.observation ="";  
@@ -33,29 +33,47 @@
     //TB-BIOSENTIERS
     function loadObservation()
     {
-      //TODELETE
-      console.log("dans stateParams il y a : ", $stateParams);
-      var param = {
+      var tab_allSeenPois;
+      var tab_allObservations;
+      var tab_filtredSeenPoisObservations = [];
+
+      var paramObservation = {
         qrId : $stateParams.qrId,
         speciesId : $stateParams.speciesId
       };
-      //TODELETE
-      console.log("$stateParams.qrId : ",$stateParams.qrId);
-      console.log("$stateParams.speciesId : ",$stateParams.speciesId);
 
-      DbObservation.fetchAll(param)
-        .then(function(observation){
-          //TODELETE
-          console.log("Le fetchAll retourne cela :",observation);  
-          console.log(observation[1]);
-          if(observation.length == 0){
-            poiCtrl.displayObservation = false;
-          }
-          else{
-            poiCtrl.observations = observation;        
-          }
+      var promise = {
+        tab_allSeenPois : DbSeenPois.fetchAll($stateParams.qrId),
+        tab_allObservations : DbObservation.fetchAll(paramObservation)
+      }     
+      
+      
+      $q.all(promise).then(function(resultat){
+        //Fonction double boucle
+        console.log("Resultat ...:D",resultat);
+        console.log("Resultat ...:D",resultat.tab_allObservations);
+        console.log("Longueur de all Observation ...:D", resultat.tab_allObservations.length);
+       
+        for (var i = 0; i < resultat.tab_allObservations.length; i++) {
+          console.log("resultat.tab_allObservations[i].text =",resultat.tab_allObservations[i].text);         
+          for (var j = 0; j < resultat.tab_allSeenPois.length; j++) {
+            if(resultat.tab_allObservations[i].poiId == resultat.tab_allSeenPois[j].poiId){
+              console.log("Toto");
+              tab_filtredSeenPoisObservations.push({"text" : resultat.tab_allObservations[i].text}); 
+            }
+          }       
+        }      
+        if(tab_filtredSeenPoisObservations.length == 0){
+          poiCtrl.displayObservation = false;
+        }
+        else{
+          console.log("dnas le tableau filtré il y a : ",tab_filtredSeenPoisObservations);
+          poiCtrl.observations = tab_filtredSeenPoisObservations;        
+        } 
 
-      });
+      }); 
+      
+
     }
 
 
