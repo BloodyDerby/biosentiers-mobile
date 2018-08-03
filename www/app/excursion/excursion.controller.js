@@ -30,8 +30,12 @@
     var geoData, positionWatcher;
     var RefreshData = rx.Observable.merge(DbExcursions.archivedObs, DbExcursions.restoredObs);
 
-    //TODELETE
-    console.log(DbObservation.fetchAll()/*.then(DbObservation.removeObservation())*/);
+    /**TB-BIOSENTIERS //TODELETE
+    * this function remove the observation data at the start of the application.
+    * Usefull if you want to do test with the observation collection without deleting the app 
+    * on the phone then redownload it + scan the QRCode again etc..
+    *
+    console.log(DbObservation.fetchAll().then(DbObservation.removeObservation())); */
 
     $log.log(TAG + "excursion data", excursionData);
     excursion.data = excursionData;

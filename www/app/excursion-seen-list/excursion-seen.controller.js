@@ -24,7 +24,10 @@
       });
 
     ////////////////////
-    //TB-BIOSENTIER
+    /*TB-BIOSENTIERS
+    **Add speciesId and  qrId to be able to recover their value in
+    ** excursion-seem-poi.controller in $stateParams
+    */
     function goToSpeciesCard(seenSpecies) {
       ActivityTracker(EventLogFactory.navigation.excursion.seenPois.card(seenSpecies.speciesId, excursionSeen.excursion));
       $state.go('app.excursion.seenlist.poi', {theme: seenSpecies.theme, speciesId: seenSpecies.speciesId, qrId: excursionSeen.excursion.qrId })

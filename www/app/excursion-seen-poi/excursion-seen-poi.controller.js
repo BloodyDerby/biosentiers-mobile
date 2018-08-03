@@ -11,6 +11,8 @@
     var TAG     = "[ExcursionSeenPoiCtrl] ",
         poiCtrl = this;       
         poiCtrl.observation ="";  
+        //TB-BIOSENTIERS gestion des templates de la fiche d'espèce selon l'affichage via 
+        //l'instance Ionic (displayP) ou l'instance AR (displayTxtArea)
         poiCtrl.displayObservation = true;
         poiCtrl.displayTxtArea = false;
         poiCtrl.displayP = true;
@@ -27,6 +29,7 @@
         $log.log(TAG + "updated controller", poiCtrl);
         poiCtrl.includeSrc = './utils/poi-card/poi-card-' + $stateParams.theme + '.html';
     });
+    //TB-BIOSENTIERS call the function when the page is loaded
     loadObservation();
 
     ////////////////////
@@ -41,24 +44,19 @@
         qrId : $stateParams.qrId,
         speciesId : $stateParams.speciesId
       };
-
+      //make 2 promised requests
       var promise = {
         tab_allSeenPois : DbSeenPois.fetchAll($stateParams.qrId),
         tab_allObservations : DbObservation.fetchAll(paramObservation)
       }     
       
-      
+      //After all requests done, tab combinaison to get all the observations of the current species
+      // linked to all pois. 
       $q.all(promise).then(function(resultat){
-        //Fonction double boucle
-        console.log("Resultat ...:D",resultat);
-        console.log("Resultat ...:D",resultat.tab_allObservations);
-        console.log("Longueur de all Observation ...:D", resultat.tab_allObservations.length);
-       
-        for (var i = 0; i < resultat.tab_allObservations.length; i++) {
-          console.log("resultat.tab_allObservations[i].text =",resultat.tab_allObservations[i].text);         
+        //Fonction double boucle       
+        for (var i = 0; i < resultat.tab_allObservations.length; i++) {         
           for (var j = 0; j < resultat.tab_allSeenPois.length; j++) {
             if(resultat.tab_allObservations[i].poiId == resultat.tab_allSeenPois[j].poiId){
-              console.log("Toto");
               tab_filtredSeenPoisObservations.push({"text" : resultat.tab_allObservations[i].text}); 
             }
           }       
@@ -67,12 +65,11 @@
           poiCtrl.displayObservation = false;
         }
         else{
-          console.log("dnas le tableau filtré il y a : ",tab_filtredSeenPoisObservations);
+          console.log("Tableau recompilé observations des points vus : ",tab_filtredSeenPoisObservations);
           poiCtrl.observations = tab_filtredSeenPoisObservations;        
         } 
 
-      }); 
-      
+      });       
 
     }
 

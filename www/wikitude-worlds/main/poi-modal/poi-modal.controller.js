@@ -15,6 +15,7 @@
     poiCtrl.setPoiSeen = setPoiSeen;
     poiCtrl.checkBoxState = checkBoxState;
     poiCtrl.getImageSource = getImageSource;
+    //TB-BIOSENTIERS add propreties
     poiCtrl.resizeTxtArea = resizeTxtArea;
     poiCtrl.upsertObservation = upsertObservation;
     poiCtrl.observation;
@@ -32,26 +33,30 @@
       poiCtrl.includeSrc = '../../utils/poi-card/poi-card-' + data.details.theme + '.html';
     });
 
-
     //TB-BIOSENTIERS Load the observation of the current opened poi
     console.log("Lancement de la fonction loadObservation() dans le controlleur poi");
     loadObservation();
+
     ////////////////////
 
+    //TB-BIOSENTIERS Load the observation of the current opened poi
     function loadObservation()
     {
       var param = {
         observationId : Excursion.qrId+poiCtrl.poi.properties.id
       };
+      //Use ionicitude to pass the object param and get a call back
       AppActions.execute('loadObservation', param, { return: true })
       .then(function(loadedObservation){
         console.log("Loaded Observation = ",loadedObservation);
-        if(loadedObservation!=null)
+        if(loadedObservation!=null){          
           poiCtrl.observation = loadedObservation.text;
+          
+        }
       });
     }
 
-    //TB-BIOSENTIERS Auto Height resize function for textArea of "observation" on AR spcie
+    //TB-BIOSENTIERS Auto Height resize function for textArea of "observation" on AR specie    
     function resizeTxtArea() {
       var tx = document.getElementsByTagName('textarea');
         for (var i = 0; i < tx.length; i++) {
@@ -64,10 +69,9 @@
         this.style.height = (this.scrollHeight) + 'px';
       }
     }
-    //TB-BIOSENTIERS Create/update an observation from textArea, then save it in db
+    //TB-BIOSENTIERS Create/update an observation from textArea, then save it in lokiJs db
     function upsertObservation()
     {
-      //TODELETE
       console.log(poiCtrl);
       //Creating an observation object with current values
       var param = {
@@ -82,8 +86,6 @@
 
       if(poiCtrl.observation !=null)
       {
-        //TODELETE
-        console.log("Ajout ou update d'observation-->upsert");
         AppActions.execute('upsertObservation', param);
       }
     }

@@ -1,3 +1,6 @@
+//TB-BIOSENTIERS
+//This file was fully created during the TB
+//LokiJs  use this file to generate or update and do request on the observation collection
 (function() {
   'use strict';
   angular
@@ -14,8 +17,6 @@
           fetchAll    : fetchAll,
           fetchOne    : fetchOne,
           upsertOne   : upsertOne,
-          addOne      : addOne,
-          updateOne   : updateOne,
           removeObservation : removeObservation,
         };
 
@@ -48,8 +49,9 @@
     }
 
 
-  /**
-   * Add or Update an  Observation in the database.
+  /**TB-BIOSENTIERS
+   * An add and update functions were created. But the developper said that we can do two in once, here we go with the upsert. 
+   * Add or Update an  Observation in the lokiJs database.
    * @param {Observation} observation - An object representing the new Observation to add.
    */
    function upsertOne(observation) {
@@ -59,63 +61,27 @@
         observationCollection = coll;
          return coll.findOne({observationId : observation.observationId});})
       .then(function(observationFound) {
-        console.log("observationFound = ", observationFound)
         if(observationFound === null){
-          console.log("Nouvelle observation à ajouter", observationCollection);
           return observationCollection.insert(observation);          
         }
         else{          
-          console.log("Observation à MAJ", observationCollection);
-          //should do modifiy the proprety in the object from res cause this one has meta $loki info. can't update with observation Object
+          //Should keep the observation object returned by the fineOne request cause this one have additional meta data
+          //Which are important to match the observation entity and do the update.
           observationFound.text = observation.text;
           return observationCollection.update(observationFound);          
         }
       })
       .catch(handleError)
       .finally(DbBio.save);
-  } 
-
-
-      /**
-     * Adds a new Observation in the database.
-     * @param {Observation} observation - An object representing the new Observation to add.
-     */
-      function addOne(observation) {
-        return getCollection()
-          .then(function(coll) {return coll.insert(observation);})
-          .catch(handleError)
-          .finally(DbBio.save);
     } 
-
-            
-     /* var coll;
-      return getCollection()
-        .then(function(collection) {
-      coll = collection;
-      return coll.insert(observation);})
-      .catch(handleError)
-      .finally(function() {
-        DbBio.save();
-      })  */
-    
-    //TODELETE Supprime la collection
+        
+    //TB-BIOSENTIERS
+    //TODELETE Custom remove function to make test on the data base without deleting the app
+    //Check the excursion.controller.js file
     function removeObservation() {
          return DbBio.removeObsColl();
     }
-
-    /**
-     * Updates the Observation that matches the given observation object.
-     * Uses internal Loki properties to do the matching.
-     * @param {Observation} observation - The Observation to update.
-     * @return {Promise} - A promise of an updated Observation.
-     */
-    function updateOne(observation) {
-      return getCollection()
-        .then(function(coll) { return coll.update(observation); })
-        .catch(handleError)
-        .finally(DbBio.save)
-    }
-
+    
     /* ----- Private Functions ----- */
     function handleError(error) {
       $log.log(TAG + "error", error);

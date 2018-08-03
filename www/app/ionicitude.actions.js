@@ -46,13 +46,17 @@
       addIonicitudeAction(addSeenPoi);
       addIonicitudeAction(finishExcursion);
       addIonicitudeAction(trackActivity);
+      //TB-BIOSENTIERS intégration des fonctions dans ionicitude Action
       addIonicitudeAction(upsertObservation);
       addIonicitudeAction(loadObservation);
 
       // Ionicitude.listLibActions();
 
       ////////////////////
-      //TB-BioSentiers : Add or update observation in the db loki
+      //TB-BIOSENTIERS : Add or update an observation in the db loki
+      // this function is called when the textarea lose focus on the template of the 
+      // detail species card (check file poi-modal-tree-htmland same for other species) 
+      // use of data package with ionicitude
       function upsertObservation(service, observation) {
         //TODELETE
         console.log("Ionictitude action trigger, the observation is :",observation);
@@ -64,7 +68,12 @@
                                              observation.speciesId,
                                              observation.poiId));
       }
-
+      //
+      /**TB-BIOSENTIERS
+       * Add or update an observation in the db loki.
+       * @param service The Ionicitude service
+       * @param {observation} observation - content data to match the req fetchOne with the entity observation
+       */
       function loadObservation(service, observation){
         return DbObservation.fetchOne(observation.observationId);
       }

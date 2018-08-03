@@ -1,3 +1,6 @@
+//TB-BIOSENTIERS
+//This file was fully created during the TB
+//LokiJs  use this file to generate or update and do request on the observation collection
 (function() {
   'use strict';
   angular
